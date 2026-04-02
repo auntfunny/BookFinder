@@ -46,7 +46,7 @@ const Home = ({ defaultGenre }) => {
         </Link>
       </div>
       <BookList
-        data={data.slice(0, loadNumber)}
+        data={data.type === "array" ? data.slice(0, loadNumber) : data}
         error={error}
         loading={loading}
       />
