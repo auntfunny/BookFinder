@@ -12,7 +12,7 @@ const Home = ({ defaultGenre }) => {
   const loadNumber = isBigScreen ? "4" : isMediumScreen ? "3" : "2";
   const { data, error, loading } = useFetch(
     isMounted
-      ? `https://openlibrary.org/search.json?q=${defaultGenre}&limit=${loadNumber}`
+      ? `https://openlibrary.org/search.json?q=${defaultGenre}&limit=4`
       : null,
   );
 
@@ -46,7 +46,7 @@ const Home = ({ defaultGenre }) => {
           </svg>
         </Link>
       </div>
-      <BookList data={data} error={error} loading={loading} />
+      <BookList data={data.slice(0, loadNumber)} error={error} loading={loading} />
     </main>
   );
 };
