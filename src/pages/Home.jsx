@@ -10,7 +10,8 @@ const Home = ({ defaultGenre }) => {
   const isMediumScreen = useMediaQuery("(min-width: 768px)");
   const isBigScreen = useMediaQuery("(min-width: 1024px)");
   const loadNumber = isBigScreen ? "4" : isMediumScreen ? "3" : "2";
-  const { data, error, loading } = useFetch( `https://openlibrary.org/search.json?q=${defaultGenre}&limit=4`
+  const { data, error, loading } = useFetch(
+    `https://openlibrary.org/search.json?q=${defaultGenre}&limit=4`,
   );
 
   useEffect(() => {
@@ -43,7 +44,11 @@ const Home = ({ defaultGenre }) => {
           </svg>
         </Link>
       </div>
-      <BookList data={data.slice(0, loadNumber)} error={error} loading={loading} />
+      <BookList
+        data={data.slice(0, loadNumber)}
+        error={error}
+        loading={loading}
+      />
     </main>
   );
 };
