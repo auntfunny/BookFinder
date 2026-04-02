@@ -20,6 +20,7 @@ const Home = ({ defaultGenre }) => {
 
   return (
     <main className="flex flex-col gap-4 items-center bg-gray-200 min-h-screen w-full">
+      {console.log(data, error, loading)}
       <SearchForm />
       <div className="flex justify-between items-center w-full px-4 md:max-w-2xl lg:max-w-4xl">
         <h2 className="text-2xl font-bold">{defaultGenre} Books</h2>
