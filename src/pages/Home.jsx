@@ -6,7 +6,6 @@ import { useMediaQuery } from "../hooks/useMediaQuery";
 import { useEffect, useState } from "react";
 
 const Home = ({ defaultGenre }) => {
-  const [isMounted, setIsMounted] = useState(false);
   const isMediumScreen = useMediaQuery("(min-width: 768px)");
   const isBigScreen = useMediaQuery("(min-width: 1024px)");
   const loadNumber = isBigScreen ? "4" : isMediumScreen ? "3" : "2";
@@ -14,13 +13,8 @@ const Home = ({ defaultGenre }) => {
     `https://openlibrary.org/search.json?q=${defaultGenre}&limit=4`,
   );
 
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
   return (
     <main className="flex flex-col gap-4 items-center bg-gray-200 min-h-screen w-full">
-      {console.log(data, error, loading)}
       <SearchForm />
       <div className="flex justify-between items-center w-full px-4 md:max-w-2xl lg:max-w-4xl">
         <h2 className="text-2xl font-bold">{defaultGenre} Books</h2>

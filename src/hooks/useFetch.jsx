@@ -10,7 +10,6 @@ function useFetch(url) {
     async function getBooks() {
       setLoading(true);
       try {
-        console.log(url);
         const { data } = await axios.get(url);
         setData(data.docs);
       } catch (error) {
