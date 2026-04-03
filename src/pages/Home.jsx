@@ -3,12 +3,11 @@ import SearchForm from "../components/SearchForm";
 import BookList from "../components/BookList";
 import { Link } from "react-router-dom";
 import { useMediaQuery } from "../hooks/useMediaQuery";
-import { useEffect, useState } from "react";
 
 const Home = ({ defaultGenre }) => {
   const isMediumScreen = useMediaQuery("(min-width: 768px)");
   const isBigScreen = useMediaQuery("(min-width: 1024px)");
-  const loadNumber = isBigScreen ? "4" : isMediumScreen ? "3" : "2";
+  const loadNumber = isBigScreen ? 4 : isMediumScreen ? 3 : 2;
   const { data, error, loading } = useFetch(
     `https://openlibrary.org/search.json?q=${defaultGenre}&limit=4`,
   );
@@ -40,9 +39,10 @@ const Home = ({ defaultGenre }) => {
         </Link>
       </div>
       <BookList
-        data={data.type === "array" ? data.slice(0, loadNumber) : data}
+        data={data.docs ? data.docs.slice(0, loadNumber) : []}
         error={error}
         loading={loading}
+        loadNumber={loadNumber}
       />
     </main>
   );

@@ -14,7 +14,6 @@ export function FavProvider({ children }) {
   const { user } = useAuth();
 
   const getFavorites = async () => {
-    console.log("get favorites");
     const { data } = await supabase
       .from("favoriteBooks")
       .select("bookID")
@@ -41,7 +40,6 @@ export function FavProvider({ children }) {
       if (faveData.length === 0) return;
 
       setLoadingBooks(true);
-      console.log("fetch full book");
       try {
         const bookPromises = faveData.map((item) =>
           fetch(`https://openlibrary.org${item.bookID}.json`).then((res) =>

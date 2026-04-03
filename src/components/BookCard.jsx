@@ -4,19 +4,31 @@ import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 function BookCard({ book }) {
-  const { favorites, editFavorites, loadingChange } = useFaves();
-  const {user} = useAuth()
+  const { favorites, editFavorites } = useFaves();
+  const { user } = useAuth();
+  const [exists, setExists] = useState(favorites.find((fave) => fave.key === book.key));
+  const [listLoaded, setListLoaded] = useState(true);
   const navigate = useNavigate();
-  const exists = favorites.find((fave) => fave.key === book.key);
-  
+
   const handleClick = () => {
-    if(user){
-      editFavorites(book.key)
+    setListLoaded(false);
+    if (user) {
+      editFavorites(book.key);
+      if(exists){
+        setExists(null);
+      } else {
+        setExists(book);
+      }
     } else {
       navigate("/login");
     }
-  }
- 
+  };
+
+  useEffect(() => {
+    setListLoaded(true);
+  }, [favorites]);
+
+
   return (
     <div className="relative flex flex-col justify-between w-42 h-88 md:w-52 md:h-104 rounded-2xl min-h-40 bg-white">
       <div className="w-full h-60 md:h-72 overflow-hidden items-center rounded-t-2xl">
@@ -26,7 +38,7 @@ function BookCard({ book }) {
               ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`
               : book.covers
                 ? `https://covers.openlibrary.org/b/id/${book.covers?.[0]}-M.jpg`
-                : `https://loremflickr.com/168/240/book`
+                : `https://loremflickr.com/168/240/${book.title.split(" ")[0]}?random=${book.key}`
           }
           alt="Book Cover"
           className="w-full object-cover"
@@ -42,11 +54,11 @@ function BookCard({ book }) {
         {book.first_publish_year}
       </p>
       <button
-        disabled={loadingChange === book.key}
+        disabled={!listLoaded}
         onClick={handleClick}
-        className={`absolute top-3 right-3 flex justify-center items-center bg-[#fffd] w-10 h-10 rounded-full ${exists ? "text-accBlue" : "text-gray-400"} hover:cursor-pointer hover:shadow hover:bg-accBGBlue`}
+        className={`absolute top-3 right-3 flex justify-center items-center bg-[#fffd] w-10 h-10 rounded-full ${exists ? "text-accBlue" : "text-gray-400"} hover:shadow hover:bg-accBGBlue ${!listLoaded ? "hover:cursor-wait opacity-80" : "hover:cursor-pointer"}`}
       >
-        {loadingChange === book.key ? (
+        {!listLoaded ? (
           <div className="animate-spin rounded-full h-6 w-6 border-4 border-accBlue border-t-transparent"></div>
         ) : (
           <svg

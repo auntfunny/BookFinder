@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 function Header() {
   const {user, logout} = useAuth();
-  const {favorites} = useFaves()
+  const {setFavorites, favorites} = useFaves()
   const navigate = useNavigate()
 
   async function handleLogout(){
@@ -15,6 +15,7 @@ function Header() {
       const result = await logout()
       if(result.success){
         navigate("/login");
+        setFavorites([]);
       } else {
         console.error(result.error);
       }

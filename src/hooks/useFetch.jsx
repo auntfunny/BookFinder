@@ -11,7 +11,7 @@ function useFetch(url) {
       setLoading(true);
       try {
         const { data } = await axios.get(url);
-        setData(data.docs);
+        setData(data);
       } catch (error) {
         console.error("Something went wrong: ", error);
         setError(error);
